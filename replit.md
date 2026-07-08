@@ -1,6 +1,6 @@
-# [Project name]
+# FlowDesk AI
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+Dashboard de automação inteligente para pequenos negócios gerenciarem atendimento e leads via IA.
 
 ## Run & Operate
 
@@ -30,7 +30,7 @@ _Populate as you build — non-obvious choices a reader couldn't infer from the 
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+FlowDesk AI centraliza conversas de clientes, classifica leads automaticamente com IA, e sugere respostas — para donos de pequenos negócios. Inclui: Dashboard com métricas, Inbox com sugestões de IA, Kanban de leads, e painel de automações. Dados mockados em pt-BR, dark mode por padrão, sem backend.
 
 ## User preferences
 
