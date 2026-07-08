@@ -13,12 +13,32 @@ export default function Inbox() {
   const [selectedId, setSelectedId] = useState(conversations[0].id);
   const [message, setMessage] = useState("");
   const [mobileView, setMobileView] = useState<MobileView>("list");
+  const [usedSuggestion, setUsedSuggestion] = useState(false);
 
   const selectedConv = conversations.find(c => c.id === selectedId) || conversations[0];
+
+  const aiSuggestion = `Olá ${selectedConv.name.split(' ')[0]}! Nossos prazos de entrega variam de 3 a 7 dias úteis dependendo da sua região. Para São Paulo e Grande SP, geralmente entregamos em 3 dias. Posso verificar a disponibilidade específica para o seu CEP?`;
 
   const handleSelectConversation = (id: string) => {
     setSelectedId(id);
     setMobileView("chat");
+    setUsedSuggestion(false);
+    setMessage("");
+  };
+
+  const handleUseSuggestion = () => {
+    setMessage(aiSuggestion);
+    setUsedSuggestion(true);
+  };
+
+  const handleEditSuggestion = () => {
+    setMessage(aiSuggestion);
+    setUsedSuggestion(false);
+    // focus textarea after state update
+    setTimeout(() => {
+      const ta = document.querySelector<HTMLTextAreaElement>('[data-testid="textarea-message"]');
+      if (ta) { ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); }
+    }, 50);
   };
 
   const getSourceIcon = (source: string) => {
@@ -192,7 +212,11 @@ export default function Inbox() {
           {/* Input bar */}
           <div className="p-3 md:p-4 bg-card border-t shrink-0">
             <div className="flex items-end gap-2">
-              <button className="shrink-0 p-2 text-primary hover:bg-primary/10 rounded-md transition-colors">
+              <button
+                className="shrink-0 p-2 text-primary hover:bg-primary/10 rounded-md transition-colors"
+                onClick={handleUseSuggestion}
+                title="Inserir sugestão da IA"
+              >
                 <Sparkles className="w-4 h-4" />
               </button>
               <textarea
@@ -222,15 +246,20 @@ export default function Inbox() {
               <h4 className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider">Sugestão de Resposta</h4>
               <div className="bg-primary/10 border border-primary/20 rounded-lg p-3 shadow-inner">
                 <p className="text-sm text-foreground/90 leading-relaxed italic">
-                  "Olá {selectedConv.name.split(' ')[0]}! Nossos prazos de entrega variam de 3 a 7 dias úteis dependendo da sua região. Para São Paulo e Grande SP, geralmente entregamos em 3 dias. Posso verificar a disponibilidade específica para o seu CEP?"
+                  "{aiSuggestion}"
                 </p>
               </div>
               <div className="flex gap-2">
-                <Button size="sm" className="flex-1 h-8 text-xs gap-1.5 shadow-[0_0_10px_rgba(37,99,235,0.2)]">
+                <Button
+                  size="sm"
+                  className="flex-1 h-8 text-xs gap-1.5 shadow-[0_0_10px_rgba(37,99,235,0.2)]"
+                  onClick={handleUseSuggestion}
+                  disabled={usedSuggestion}
+                >
                   <Check className="w-3.5 h-3.5" />
-                  Usar
+                  {usedSuggestion ? "Inserido!" : "Usar"}
                 </Button>
-                <Button size="sm" variant="outline" className="flex-1 h-8 text-xs gap-1.5">
+                <Button size="sm" variant="outline" className="flex-1 h-8 text-xs gap-1.5" onClick={handleEditSuggestion}>
                   <Edit2 className="w-3.5 h-3.5" />
                   Editar
                 </Button>
