@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Route, Switch, Router as WouterRouter } from "wouter";
 import { Sidebar } from "@/components/layout/Sidebar";
+import { BottomNav } from "@/components/layout/BottomNav";
 import Dashboard from "@/pages/Dashboard";
 import Inbox from "@/pages/Inbox";
 import Leads from "@/pages/Leads";
@@ -36,10 +37,14 @@ function App() {
   return (
     <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
       <div className="min-h-[100dvh] w-full bg-background text-foreground flex text-sm">
+        {/* Desktop sidebar */}
         <Sidebar />
-        <main className="ml-[220px] flex-1 min-w-0">
+        {/* Page content — on mobile full width, on desktop offset by sidebar */}
+        <main className="flex-1 min-w-0 md:ml-[220px] pb-16 md:pb-0">
           <Router />
         </main>
+        {/* Mobile bottom nav */}
+        <BottomNav />
       </div>
     </WouterRouter>
   );

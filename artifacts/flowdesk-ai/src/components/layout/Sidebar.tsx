@@ -14,7 +14,7 @@ export function Sidebar() {
   ];
 
   return (
-    <aside className="fixed top-0 left-0 bottom-0 w-[220px] bg-card border-r flex flex-col z-10">
+    <aside className="hidden md:flex fixed top-0 left-0 bottom-0 w-[220px] bg-card border-r flex-col z-10">
       <div className="p-6">
         <Link href="/" className="flex items-center gap-2" data-testid="link-home">
           <div className="bg-primary/20 p-1.5 rounded-md flex items-center justify-center">
